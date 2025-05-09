@@ -127,12 +127,6 @@ namespace PhotoBooth.MVVM.ViewModel
 
         #endregion
 
-       
-
-
-       
-
-
         //Live Camera initialization
         private void StartCamera()
         {
@@ -320,7 +314,12 @@ namespace PhotoBooth.MVVM.ViewModel
             }
         }
 
-        //Save Canvas to file
+
+        /// <summary>
+        /// Saves the canvas as a PNG file.
+        /// Carry the input Name for the file from the UI
+        /// </summary>
+        /// <param name="canvas"></param>
         private void SaveCanvas(Canvas canvas)
         {
             if (canvas == null)
