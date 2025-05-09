@@ -14,10 +14,13 @@ namespace PhotoBooth.Abstract
 {
     abstract class ViewModelBase : BindableBase
     {
-        private string ApplicationName => "Photo Booth WPF 2025";
-        private Version Version => new Version(1, 0);
+        //private string ApplicationName => "Photo Booth WPF 2025";
+        //private Version Version => new Version(1, 0);
 
-        public string Title => $"{ApplicationName} v{Version}";
+        public string ApplicationName;
+        public Version ApplicationVersion;
+
+        public string Title => $"{ApplicationName} v{ApplicationVersion}";
 
 
         public ViewModelBase()

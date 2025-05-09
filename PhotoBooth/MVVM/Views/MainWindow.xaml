@@ -37,28 +37,40 @@
 
         <!-- Camera Preview Area -->
         <StackPanel Grid.Row="1" Grid.Column="0" Margin="20" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Border  Background="White" CornerRadius="8"  Margin="0,0,0,10" Width="500" Height="500">
-                <Image Source="{Binding CameraImage}" Margin="10">
-                    <dx:Interaction.Behaviors>
-                        <dx:EventToCommand EventName="Initialized" Command="{Binding StartCameraCommand}"/>
-                    </dx:Interaction.Behaviors>
-                </Image>
-            </Border>
+            
+                <Border Background="White" CornerRadius="8"  Margin="0,0,0,10" Width="500" Height="500" Visibility="{Binding NoCameraFound, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="No Camera" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Border>
+                
+                <Border Background="White" CornerRadius="8"  Margin="0,0,0,10" Width="500" Height="500" Visibility="{Binding CameraFound, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Image Source="{Binding CameraImage}" Margin="10" >
+                        <dx:Interaction.Behaviors>
+                            <dx:EventToCommand EventName="Initialized" Command="{Binding StartCameraCommand}"/>
+                        </dx:Interaction.Behaviors>
+                    </Image>
+                </Border>
+
+            
 
             <Button Content="📸 Take Photo" Command="{Binding TakePhotoCommand}" Width="200" Height="50" FontSize="18" Background="#FF4CAF50" Foreground="White" BorderBrush="Transparent" Cursor="Hand" HorizontalAlignment="Center"/>
         </StackPanel>
 
+
         <!-- Controls Area -->
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
 
-            <!-- Last Photo Thumbnail --><!--
-            <Border Background="White" CornerRadius="8" Padding="5" Margin="0,10,0,0">
-                <Image Width="300" Height="250" Stretch="UniformToFill" Source="{Binding CapturedImage}"/>
-            </Border>-->
-
-            <Canvas x:Name="CanvasImage" Background="White" Height="700" Width="700">
-                <TextBlock Canvas.Left="250" Canvas.Top="650" Text="Suroshii Photo Booth" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" Margin="0,10,0,10"/>
-
+            <Canvas x:Name="CanvasImage" Background="Black" Height="700" Width="700" >
+               <ui:TextBox Canvas.Left="250" Canvas.Top="630" 
+                            PlaceholderText="Enter your name" 
+                            Text="{Binding TitleName}" 
+                            FontSize="20" FontWeight="Bold" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center" 
+                            Foreground="White" 
+                            Margin="0,10,0,10" Width="200" 
+                            BorderBrush="Transparent" 
+                            BorderThickness="0" 
+                            Background="Transparent"/>
                 <Grid Height="650" Width="700">
                     <Grid.RowDefinitions>
                         <RowDefinition  />
@@ -70,34 +82,33 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Column="0" Grid.Row="0">
-                        <Border Background="White" CornerRadius="8">
+                        <Border Background="White" CornerRadius="8" Width="330" Height="300" Margin="10">
                             <Image Width="330" Height="300" Margin="10" Stretch="UniformToFill" Source="{Binding CapturedImage1}"/>
-                        </Border> 
+                        </Border>
                     </StackPanel>
                     <StackPanel Grid.Column="1" Grid.Row="0" >
-                        <Border Background="White" CornerRadius="8" >
+                        <Border Background="White" CornerRadius="8" Width="330" Height="300" Margin="10">
                             <Image Width="330" Height="300" Margin="10" Stretch="UniformToFill" Source="{Binding CapturedImage2}"/>
                         </Border>
                     </StackPanel>
                     <StackPanel Grid.Column="0" Grid.Row="1">
-                        <Border Background="White" CornerRadius="8">
+                        <Border Background="White" CornerRadius="8" Width="330" Height="300" Margin="10">
                             <Image Width="330" Height="300" Margin="10" Stretch="UniformToFill" Source="{Binding CapturedImage3}"/>
                         </Border>
                     </StackPanel>
                     <StackPanel Grid.Column="1" Grid.Row="1">
-                        <Border Background="White" CornerRadius="8">
+                        <Border Background="White" CornerRadius="8" Width="330" Height="300" Margin="10">
                             <Image Width="330" Height="300" Margin="10" Stretch="UniformToFill" Source="{Binding CapturedImage4}"/>
                         </Border>
                     </StackPanel>
                 </Grid>
-                
             </Canvas>
 
             <!-- Action Buttons -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
                 <Button Content="💾 Save" Command="{Binding SaveCanvasCommand}" CommandParameter="{Binding ElementName=CanvasImage}" Width="100" Height="40" Background="#FF2196F3" Foreground="White" BorderBrush="Transparent" Cursor="Hand" />
-                <Button Content="🔄 Retake" Width="100" Height="40" Background="#FFFF5722" Foreground="White" BorderBrush="Transparent" Cursor="Hand" />
-                <Button Content="❌ Exit" Width="100" Height="40" Background="#FFF44336" Foreground="White" BorderBrush="Transparent" Cursor="Hand" />
+                <Button Content="🔄 Retake" Command="{Binding RetakeCapturedCommand}" Width="100" Height="40" Background="#FFFF5722" Foreground="White" BorderBrush="Transparent" Cursor="Hand" />
+                <Button Content="❌ Exit" Command="{Binding ResetCapturedCommand}" Width="100" Height="40" Background="#FFF44336" Foreground="White" BorderBrush="Transparent" Cursor="Hand" />
             </StackPanel>
         </StackPanel>
 
